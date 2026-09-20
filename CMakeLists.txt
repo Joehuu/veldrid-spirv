@@ -1,4 +1,5 @@
-cmake_minimum_required (VERSION 3.16)
+cmake_minimum_required (VERSION 3.0)
+cmake_policy(SET CMP0057 NEW)
 
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "Minimum OS X deployment version")
 
@@ -8,23 +9,10 @@ endif()
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-execute_process(
-    COMMAND git apply "${CMAKE_CURRENT_SOURCE_DIR}/ext/upgrade_cmake.patch"
-    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/ext"
-    OUTPUT_QUIET
-    ERROR_QUIET
-)
-
 add_subdirectory(ext/SPIRV-Cross)
 
 set(SHADERC_SKIP_TESTS ON)
 set(SHADERC_SKIP_INSTALL ON)
-set(SHADERC_GOOGLE_TEST_DIR "${CMAKE_CURRENT_SOURCE_DIR}/ext/googletest" CACHE STRING "" FORCE)
-set(SHADERC_SPIRV_TOOLS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/ext/spirv-tools" CACHE STRING "" FORCE)
-set(SHADERC_SPIRV_HEADERS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/ext/spirv-headers" CACHE STRING "" FORCE)
-set(SHADERC_GLSLANG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/ext/glslang" CACHE STRING "" FORCE)
-set(SHADERC_EFFCEE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/ext/effcee" CACHE STRING "" FORCE)
-set(SHADERC_RE2_DIR "${CMAKE_CURRENT_SOURCE_DIR}/ext/re2" CACHE STRING "" FORCE)
 add_subdirectory(ext/shaderc)
 
 set(CMAKE_CXX_STANDARD 17)
